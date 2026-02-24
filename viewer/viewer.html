@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Viewer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 16px;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      line-height: 1.6;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      background: #2d2d2d;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #404040;
+      z-index: 100;
+    }
+
+    .filename {
+      font-weight: bold;
+      color: #569cd6;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .toolbar button {
+      background: #0e639c;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .toolbar button:hover {
+      background: #1177bb;
+    }
+
+    .toolbar button.secondary {
+      background: #3c3c3c;
+    }
+
+    .toolbar button.secondary:hover {
+      background: #4c4c4c;
+    }
+
+    .content-wrapper {
+      display: flex;
+    }
+
+    .line-numbers {
+      background: #252526;
+      padding: 16px 8px;
+      text-align: right;
+      color: #858585;
+      user-select: none;
+      border-right: 1px solid #404040;
+      min-width: 50px;
+      white-space: pre;
+    }
+
+    .content {
+      padding: 16px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .loading {
+      padding: 32px;
+      text-align: center;
+      color: #858585;
+    }
+
+    .error {
+      padding: 32px;
+      color: #f14c4c;
+    }
+
+    /* Light theme */
+    body.light {
+      background: #ffffff;
+      color: #333333;
+    }
+
+    body.light .toolbar {
+      background: #f3f3f3;
+      border-color: #e0e0e0;
+    }
+
+    body.light .filename {
+      color: #0066cc;
+    }
+
+    body.light .line-numbers {
+      background: #f8f8f8;
+      border-color: #e0e0e0;
+      color: #999999;
+    }
+
+    /* Wrap toggle */
+    .content.no-wrap {
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="filename" id="filename">Loading...</span>
+    <button id="zoomOutBtn" class="secondary" title="Decrease font size">A-</button>
+    <button id="zoomInBtn" class="secondary" title="Increase font size">A+</button>
+    <button id="copyBtn" class="secondary">Copy</button>
+    <button id="downloadBtn">Download</button>
+    <button id="wrapBtn" class="secondary">Toggle Wrap</button>
+    <button id="themeBtn" class="secondary">Light Theme</button>
+    <button id="rawBtn" class="secondary">View Raw</button>
+  </div>
+  <div class="content-wrapper">
+    <div class="line-numbers" id="lineNumbers"></div>
+    <pre class="content" id="content"><span class="loading">Loading file...</span></pre>
+  </div>
+  <script src="viewer.js"></script>
+</body>
+</html>

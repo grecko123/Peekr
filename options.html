@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Peekr - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 24px;
+      transition: 0.2s;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background-color: #4caf50;
+    }
+
+    .toggle input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+
+    .settings-card {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 13px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #4caf50;
+    }
+
+    .buttons {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: #4caf50;
+      color: white;
+    }
+
+    button.primary:hover {
+      background: #43a047;
+    }
+
+    button.secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    button.secondary:hover {
+      background: #d0d0d0;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #4caf50;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .status.visible {
+      opacity: 1;
+    }
+
+    .help {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .donate-section {
+      margin-top: 24px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .donate-label {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .donate-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .donate-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .donate-btn.btc {
+      background: #f7931a;
+    }
+
+    .donate-btn.eth {
+      background: #627eea;
+    }
+
+    .donate-btn.xmr {
+      background: #ff6600;
+    }
+
+    .donate-btn.kofi {
+      background: #29abe0;
+    }
+
+    .donate-btn:hover {
+      opacity: 0.9;
+    }
+
+    .donate-status {
+      font-size: 12px;
+      color: #4caf50;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peekr - Settings</h1>
+
+  <div class="toggle-row">
+    <span class="toggle-label">Extension enabled</span>
+    <label class="toggle">
+      <input type="checkbox" id="enabled" checked>
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="settings-card">
+    <label for="extensions">File extensions to open in browser (one per line):</label>
+    <textarea id="extensions" placeholder="txt&#10;log&#10;py&#10;js"></textarea>
+
+    <div class="buttons">
+      <button class="secondary" id="resetBtn">Reset to Defaults</button>
+      <button class="primary" id="saveBtn">Save Settings</button>
+    </div>
+
+    <div class="status" id="status">Settings saved!</div>
+  </div>
+
+  <p class="help">
+    Files with these extensions will be displayed in the browser instead of being downloaded.
+    Enter one extension per line, without the leading dot.
+  </p>
+
+  <div class="donate-section">
+    <p class="donate-label">Support Peekr</p>
+    <div class="donate-buttons">
+      <a href="https://ko-fi.com/rom12two" target="_blank" class="donate-btn kofi" title="Support on Ko-fi">Ko-fi</a>
+      <button class="donate-btn btc" data-address="1N19qKsCEQW4afSbAbM6vtVUZvWZDgRWXF" title="Copy BTC address">BTC</button>
+      <button class="donate-btn eth" data-address="0x80D870e56AAF468545471f7Ac92AEbc493FBF6B1" title="Copy ETH address">ETH</button>
+      <button class="donate-btn xmr" data-address="49xjr7jRLswMrJ47SnvQsR8xvKM13gv1BiWxJM8JtxQhEfhwM64hXJFin5DvsUAp2QQ3dGzZFoCoa8HYe1oiJS1BBDQPP7C" title="Copy XMR address">XMR</button>
+    </div>
+    <div class="donate-status" id="donateStatus"></div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
